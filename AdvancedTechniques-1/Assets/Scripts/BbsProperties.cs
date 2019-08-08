@@ -18,7 +18,6 @@ public class BbsProperties : MonoBehaviour
         myRB.mass = mass;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         lastPos = transform.position; // Used to draw the debug line
@@ -27,7 +26,6 @@ public class BbsProperties : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(myRB.mass);
         DrawDebugLine();
     }
 
