@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    private Gun gun;
+    [SerializeField] private Gun gun;
 
     private Vector2 axis;
-    private Vector2 mouseInput;
 
     private MovementPlayer movementPlayer = null;
 
@@ -30,11 +29,10 @@ public class InputController : MonoBehaviour
 
         //MOVE THE PLAYER
         axis = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
-        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
     }
 
     private void FixedUpdate()
     {
-        movementPlayer.Move(axis, mouseInput);
+        movementPlayer.Move(axis);
     }
 }
