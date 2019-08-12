@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M9 : GunType
+public class Ak47 : GunType
 {
-    public M9()
+    public Ak47()
     {
         springForce = 1.49f;
         delayToShoot = .25f;

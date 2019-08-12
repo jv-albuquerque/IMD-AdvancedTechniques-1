@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M9 : GunType
+public class Shotgun : GunType
 {
-    public M9()
+    public Shotgun()
     {
         springForce = 1.49f;
         delayToShoot = .25f;
         backspinDrag = 0.02f;
-        spread = 0.0f;
+        spread = 5.0f;
     }
 
     public override string GetModel => "M9";
@@ -22,12 +22,13 @@ public class M9 : GunType
     public override void Shoot(GameObject projectile, Transform gunTransform)
     {
         GameObject project;
-        project = Instantiate(projectile, gunTip.position, gunTransform.rotation);
 
-        project.GetComponent<BbsProperties>().BackspinDrag = backspinDrag;
-
-        project.GetComponent<Rigidbody>().AddForce(springForce * gunTransform.forward);
-
-        project.GetComponent<Rigidbody>().velocity = Random.insideUnitSphere * spread;
+        for (int i = 0; i < 3; i++)
+        {
+            project = Instantiate(projectile, gunTip.position, gunTransform.rotation);
+            project.GetComponent<BbsProperties>().BackspinDrag = backspinDrag;
+            project.GetComponent<Rigidbody>().AddForce(springForce * gunTransform.forward);
+            project.GetComponent<Rigidbody>().velocity = Random.insideUnitSphere * spread;
+        }
     }
 }

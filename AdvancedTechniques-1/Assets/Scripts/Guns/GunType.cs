@@ -9,6 +9,7 @@ public abstract class GunType : MonoBehaviour
     protected float backspinDrag;
     protected float springForce;
     protected float delayToShoot;
+    protected float spread;
 
     public abstract void Shoot(GameObject projectile, Transform gunTransform);
 

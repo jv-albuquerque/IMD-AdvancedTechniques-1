@@ -21,16 +21,20 @@ public class Gun : MonoBehaviour
     [SerializeField] private float backspinDrag = 0.02f;
 
     private float delayToShoot = 0f;
+    private bool delaying = false;
 
     private void Awake()
     {
         switch (gunType)
         {
             case GunEquiped.Shotgun:
+                currentGun = gameObject.AddComponent<Shotgun>();
                 break;
             case GunEquiped.M4:
+                currentGun = gameObject.AddComponent<M4>();
                 break;
             case GunEquiped.Ak47:
+                currentGun = gameObject.AddComponent<Ak47>();
                 break;
             case GunEquiped.M9:
                 currentGun = gameObject.AddComponent<M9>();
@@ -46,15 +50,17 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
+        if(!delaying)
+        {
+            delaying = true;
+            Invoke("DelayedShoot", delayToShoot);
+        }
+    }
+
+    private void DelayedShoot()
+    {
+        delaying = false;
         currentGun.Shoot(projectile, gameObject.transform);
-        /*
-        GameObject project;
-        project = Instantiate(projectile, gunTip.position, gameObject.transform.rotation);
-
-        project.GetComponent<BbsProperties>().BackspinDrag = backspinDrag;
-
-        project.GetComponent<Rigidbody>().AddForce(springForce * gameObject.transform.forward);
-        */
     }
 
     public GameObject SetProjectile

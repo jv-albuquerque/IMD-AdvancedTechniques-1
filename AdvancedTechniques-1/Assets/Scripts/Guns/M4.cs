@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class M9 : GunType
+public class M4 : GunType
 {
-    public M9()
+    public M4()
     {
         springForce = 1.49f;
         delayToShoot = .25f;
@@ -31,3 +31,4 @@ public class M9 : GunType
         project.GetComponent<Rigidbody>().velocity = Random.insideUnitSphere * spread;
     }
 }
+
