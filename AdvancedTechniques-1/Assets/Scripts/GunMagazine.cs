@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class GunMagazine : MonoBehaviour
 {
@@ -10,7 +7,8 @@ public class GunMagazine : MonoBehaviour
 
     private void Start()
     {
-        UpdateAmmoCount.instance.setAmmoCount(currentAmmo);
+        if(UpdateAmmoCount.instance)
+            UpdateAmmoCount.instance.SetAmmo(currentAmmo);
     }
 
     public int CurrentAmmo
@@ -21,7 +19,8 @@ public class GunMagazine : MonoBehaviour
     public void Shot()
     {
         currentAmmo -= 1;
-        UpdateAmmoCount.instance.setAmmoCount(currentAmmo);
+        if (UpdateAmmoCount.instance)
+            UpdateAmmoCount.instance.SetAmmo(currentAmmo);
     }
 
     public GameObject ProjectileType { get => projectileType; set => projectileType = value; }

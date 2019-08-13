@@ -18,6 +18,7 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Get the left button of the mouse to call shoot function
         if (Input.GetMouseButtonDown(0))
         {
             // TODO: Do sothing better than get the gun like this
@@ -27,7 +28,11 @@ public class InputController : MonoBehaviour
         }
 
 
-        //MOVE THE PLAYER
+        if (Input.mouseScrollDelta.y != 0)
+            gun.SetHopUp = Input.mouseScrollDelta.y;
+
+
+        //Get the value of the axis to use to move the player
         axis = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
     }
 

@@ -5,9 +5,6 @@ public class UpdateAmmoCount : MonoBehaviour
 {
     private TextMeshProUGUI ammoTxt;
 
-    public delegate void SetAmmoCount(int ammo);
-    public SetAmmoCount setAmmoCount;
-
     public static UpdateAmmoCount instance;
 
     private void Awake()
@@ -17,13 +14,11 @@ public class UpdateAmmoCount : MonoBehaviour
         instance = this;
 
         ammoTxt = GetComponent<TextMeshProUGUI>();
-
-        setAmmoCount = SetAmmo;
     }
 
     public void SetAmmo(int ammo)
     {
-        ammoTxt.text = ammo.ToString();
+        ammoTxt.text = ammo.ToString() + " / 0";
     }
 
 }

@@ -17,7 +17,6 @@ public class Gun : MonoBehaviour
 
     private GunType currentGun;
 
-    [SerializeField] private GameObject projectile = null; //projectile that will be shiot
     [SerializeField] private Transform gunTip = null; // the tip of the gun
     [SerializeField] private float backspinDrag = 0.02f; // The force that simulate the spin of the projectile
 
@@ -51,6 +50,9 @@ public class Gun : MonoBehaviour
         delayToShoot = currentGun.GetDelayToShoot;
 
         magazine = GetComponent<GunMagazine>();
+
+        if (UpdateHopUpCount.instance)
+            UpdateHopUpCount.instance.SetHopUp(backspinDrag);
     }
 
     public void Shoot()
@@ -69,11 +71,18 @@ public class Gun : MonoBehaviour
         currentGun.Shoot(magazine.ProjectileType, gameObject.transform);
     }
 
-    public GameObject SetProjectile
+    public float SetHopUp
     {
         set
         {
-            projectile = value;
+            backspinDrag += (value / 1000) * 1;
+
+            backspinDrag = Mathf.Clamp(backspinDrag, 0.001f, 0.04f);
+
+            currentGun.GetBackspinDrag = backspinDrag;
+
+            if (UpdateHopUpCount.instance)
+                UpdateHopUpCount.instance.SetHopUp(backspinDrag);
         }
     }
 }
