@@ -2,7 +2,7 @@
 
 public class GetMagazine : MonoBehaviour
 {
-    [SerializeField] private Gun gun;
+    [SerializeField] private Gun gun = null;
 
     public void ChangeMagazine(int nBullet, GameObject projectile)
     {
@@ -11,7 +11,7 @@ public class GetMagazine : MonoBehaviour
 
     public bool VerifyCompatibility(int type)
     {
-        if (type == gun.GetType)
+        if (type == gun.GetGunType)
             return true;
         return false;
     }

@@ -25,6 +25,9 @@ public class Gun : MonoBehaviour
     private float delayToShoot = 0f;
     private bool delaying = false;
 
+    private bool automatic = false; // if the gun shoot automatic
+    private bool shooting = false; // if the gun is automatic, see if the player is holding the shoot button
+
     private void Awake()
     {
         switch (gunType)
@@ -53,14 +56,38 @@ public class Gun : MonoBehaviour
 
         if (UpdateHopUpCount.instance)
             UpdateHopUpCount.instance.SetHopUp(backspinDrag);
+
+        if (UpdateManualAutomatic.instance)
+            UpdateManualAutomatic.instance.SetText(automatic);
+
+        if (UpdateTypeOfGun.instance)
+            UpdateTypeOfGun.instance.SetText(gunType.ToString());
     }
 
     public void Shoot()
     {
+        shooting = true;
         if(!delaying && magazine.CurrentAmmo > 0)
         {
             delaying = true;
             Invoke("DelayedShoot", delayToShoot);
+        }
+    }
+
+    public void SetAutomatic()
+    {
+        automatic = !automatic;
+        if (UpdateManualAutomatic.instance)
+            UpdateManualAutomatic.instance.SetText(automatic);
+    }
+
+    public void ReleaseTrigger()
+    {
+        if (automatic)
+        {
+            shooting = false;
+            delaying = false;
+            CancelInvoke();
         }
     }
 
@@ -69,6 +96,11 @@ public class Gun : MonoBehaviour
         delaying = false;
         magazine.Shot();
         currentGun.Shoot(magazine.ProjectileType, gameObject.transform);
+
+        if(automatic && shooting)
+        {
+            Shoot();
+        }
     }
 
     public float SetHopUp
@@ -86,7 +118,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public int GetType
+    public int GetGunType
     {
         get
         {

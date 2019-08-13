@@ -27,9 +27,17 @@ public class InputController : MonoBehaviour
             gun.Shoot();
         }
 
+        if (Input.GetMouseButtonUp(0))
+        {
+            gun.ReleaseTrigger();
+        }
 
-        if (Input.mouseScrollDelta.y != 0)
+
+            if (Input.mouseScrollDelta.y != 0)
             gun.SetHopUp = Input.mouseScrollDelta.y;
+
+        if (Input.GetKeyDown(KeyCode.F))
+            gun.SetAutomatic();
 
 
         //Get the value of the axis to use to move the player

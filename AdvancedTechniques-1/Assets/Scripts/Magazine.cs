@@ -18,10 +18,10 @@ public class Magazine : MonoBehaviour
 
     [Header("Properties")]
     [SerializeField] private BulletType bulletType = BulletType.Shotgun;
-    [SerializeField] private Material mShotgun;
-    [SerializeField] private Material mM4;
-    [SerializeField] private Material mAk47;
-    [SerializeField] private Material mM9;
+    [SerializeField] private Material mShotgun = null;
+    [SerializeField] private Material mM4 = null;
+    [SerializeField] private Material mAk47 = null;
+    [SerializeField] private Material mM9 = null;
 
     private float[] bulletMass = { 0.00012f, 0.0002f, 0.00023f, 0.00025f, 0.00028f, 0.00030f, 0.00033f, 0.00038f, 0.00043f, 0.00045f };
     private int maxCapacity;
@@ -58,6 +58,8 @@ public class Magazine : MonoBehaviour
             default:
                 break;
         }
+
+        Debug.Log(bulletType.ToString());
     }
 
     private void OnTriggerEnter(Collider other)
