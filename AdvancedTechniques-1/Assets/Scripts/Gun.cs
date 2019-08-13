@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
+    // Gun that is equiped
     private enum GunEquiped
     {
         Shotgun = 1,
@@ -16,9 +17,11 @@ public class Gun : MonoBehaviour
 
     private GunType currentGun;
 
-    [SerializeField] private GameObject projectile = null;
-    [SerializeField] private Transform gunTip = null;
-    [SerializeField] private float backspinDrag = 0.02f;
+    [SerializeField] private GameObject projectile = null; //projectile that will be shiot
+    [SerializeField] private Transform gunTip = null; // the tip of the gun
+    [SerializeField] private float backspinDrag = 0.02f; // The force that simulate the spin of the projectile
+
+    private GunMagazine magazine;
 
     private float delayToShoot = 0f;
     private bool delaying = false;
@@ -46,11 +49,13 @@ public class Gun : MonoBehaviour
         currentGun.GetGunTip = gunTip;
         currentGun.GetBackspinDrag = backspinDrag;
         delayToShoot = currentGun.GetDelayToShoot;
+
+        magazine = GetComponent<GunMagazine>();
     }
 
     public void Shoot()
     {
-        if(!delaying)
+        if(!delaying && magazine.CurrentAmmo > 0)
         {
             delaying = true;
             Invoke("DelayedShoot", delayToShoot);
@@ -60,7 +65,8 @@ public class Gun : MonoBehaviour
     private void DelayedShoot()
     {
         delaying = false;
-        currentGun.Shoot(projectile, gameObject.transform);
+        magazine.Shot();
+        currentGun.Shoot(magazine.ProjectileType, gameObject.transform);
     }
 
     public GameObject SetProjectile
