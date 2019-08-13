@@ -33,17 +33,33 @@ public class InputController : MonoBehaviour
         }
 
 
-            if (Input.mouseScrollDelta.y != 0)
+        if (Input.mouseScrollDelta.y != 0)
             gun.SetHopUp = Input.mouseScrollDelta.y;
 
         if (Input.GetKeyDown(KeyCode.F))
             gun.SetAutomatic();
+
+        ChooseGun();
 
 
         //Get the value of the axis to use to move the player
         axis = new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
     }
 
+    private void ChooseGun()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            gun.ChangeGun(1);
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            gun.ChangeGun(2);
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+            gun.ChangeGun(3);
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            gun.ChangeGun(4);
+
+
+    }
+ 
     private void FixedUpdate()
     {
         movementPlayer.Move(axis);

@@ -58,8 +58,6 @@ public class Magazine : MonoBehaviour
             default:
                 break;
         }
-
-        Debug.Log(bulletType.ToString());
     }
 
     private void OnTriggerEnter(Collider other)

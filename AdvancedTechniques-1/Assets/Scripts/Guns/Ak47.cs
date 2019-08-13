@@ -7,9 +7,9 @@ public class Ak47 : GunType
     public Ak47()
     {
         springForce = 1.49f;
-        delayToShoot = .25f;
+        delayToShoot = .1f;
         backspinDrag = 0.02f;
-        spread = 0.0f;
+        spread = 5.0f;
     }
 
     public override string GetModel => "M9";

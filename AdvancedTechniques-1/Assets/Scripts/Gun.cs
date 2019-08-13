@@ -16,6 +16,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GunEquiped gunType = GunEquiped.M9;
 
     private GunType currentGun;
+    private int[] bulletCount = { 12, 30, 30, 9 };
 
     [SerializeField] private Transform gunTip = null; // the tip of the gun
     [SerializeField] private float backspinDrag = 0.02f; // The force that simulate the spin of the projectile
@@ -30,19 +31,25 @@ public class Gun : MonoBehaviour
 
     private void Awake()
     {
+        magazine = GetComponent<GunMagazine>();
+
         switch (gunType)
         {
             case GunEquiped.Shotgun:
                 currentGun = gameObject.AddComponent<Shotgun>();
+                magazine.CurrentAmmo = bulletCount[0];
                 break;
             case GunEquiped.M4:
                 currentGun = gameObject.AddComponent<M4>();
+                magazine.CurrentAmmo = bulletCount[1];
                 break;
             case GunEquiped.Ak47:
                 currentGun = gameObject.AddComponent<Ak47>();
+                magazine.CurrentAmmo = bulletCount[2];
                 break;
             case GunEquiped.M9:
                 currentGun = gameObject.AddComponent<M9>();
+                magazine.CurrentAmmo = bulletCount[3];
                 break;
             default:
                 break;
@@ -51,8 +58,6 @@ public class Gun : MonoBehaviour
         currentGun.GetGunTip = gunTip;
         currentGun.GetBackspinDrag = backspinDrag;
         delayToShoot = currentGun.GetDelayToShoot;
-
-        magazine = GetComponent<GunMagazine>();
 
         if (UpdateHopUpCount.instance)
             UpdateHopUpCount.instance.SetHopUp(backspinDrag);
@@ -96,8 +101,9 @@ public class Gun : MonoBehaviour
         delaying = false;
         magazine.Shot();
         currentGun.Shoot(magazine.ProjectileType, gameObject.transform);
+        bulletCount[GetGunType - 1] -= 1;
 
-        if(automatic && shooting)
+        if (automatic && shooting)
         {
             Shoot();
         }
@@ -140,7 +146,44 @@ public class Gun : MonoBehaviour
 
     public void SetMagazine(int nBullet, GameObject projectile)
     {
+        bulletCount[GetGunType - 1] = nBullet;
         magazine.CurrentAmmo = nBullet;
         magazine.ProjectileType = projectile;
+    }
+
+    public void ChangeGun(int gun)
+    {
+        switch (gun)
+        {
+            case 1:
+                gunType = GunEquiped.Shotgun;
+                currentGun = gameObject.AddComponent<Shotgun>();
+                magazine.CurrentAmmo = bulletCount[0];
+                break;
+            case 2:
+                gunType = GunEquiped.M4;
+                currentGun = gameObject.AddComponent<M4>();
+                magazine.CurrentAmmo = bulletCount[1];
+                break;
+            case 3:
+                gunType = GunEquiped.Ak47;
+                currentGun = gameObject.AddComponent<Ak47>();
+                magazine.CurrentAmmo = bulletCount[2];
+                break;
+            case 4:
+                gunType = GunEquiped.M9;
+                currentGun = gameObject.AddComponent<M9>();
+                magazine.CurrentAmmo = bulletCount[3];
+                break;
+            default:
+                break;
+        }
+
+        currentGun.GetGunTip = gunTip;
+        currentGun.GetBackspinDrag = backspinDrag;
+        delayToShoot = currentGun.GetDelayToShoot;
+
+        if (UpdateTypeOfGun.instance)
+            UpdateTypeOfGun.instance.SetText(gunType.ToString());
     }
 }

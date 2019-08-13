@@ -9,7 +9,7 @@ public class M9 : GunType
         springForce = 1.49f;
         delayToShoot = .25f;
         backspinDrag = 0.02f;
-        spread = 0.0f;
+        spread = 1.0f;
     }
 
     public override string GetModel => "M9";
