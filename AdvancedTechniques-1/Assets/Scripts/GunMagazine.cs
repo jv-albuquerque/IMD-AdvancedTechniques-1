@@ -13,6 +13,12 @@ public class GunMagazine : MonoBehaviour
 
     public int CurrentAmmo
     {
+        set
+        {
+            currentAmmo = value;
+            if (UpdateAmmoCount.instance)
+                UpdateAmmoCount.instance.SetAmmo(currentAmmo);
+        }
         get => currentAmmo;
     }
 

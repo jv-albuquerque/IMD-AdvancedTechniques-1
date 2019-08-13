@@ -18,6 +18,6 @@ public class UpdateHopUpCount : MonoBehaviour
 
     public void SetHopUp(float hopUpForce)
     {
-        slider.value = hopUpForce / 0.039f;
+        slider.value = (hopUpForce - 0.001f) / 0.039f;
     }
 }

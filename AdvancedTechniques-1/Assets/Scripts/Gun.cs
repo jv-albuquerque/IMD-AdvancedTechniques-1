@@ -75,7 +75,7 @@ public class Gun : MonoBehaviour
     {
         set
         {
-            backspinDrag += (value / 1000) * 1;
+            backspinDrag += (value / 1000) * 2;
 
             backspinDrag = Mathf.Clamp(backspinDrag, 0.001f, 0.04f);
 
@@ -84,5 +84,31 @@ public class Gun : MonoBehaviour
             if (UpdateHopUpCount.instance)
                 UpdateHopUpCount.instance.SetHopUp(backspinDrag);
         }
+    }
+
+    public int GetType
+    {
+        get
+        {
+            switch (gunType)
+            {
+                case GunEquiped.Shotgun:
+                    return 1;
+                case GunEquiped.M4:
+                    return 2;
+                case GunEquiped.Ak47:
+                    return 3;
+                case GunEquiped.M9:
+                    return 4;
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    public void SetMagazine(int nBullet, GameObject projectile)
+    {
+        magazine.CurrentAmmo = nBullet;
+        magazine.ProjectileType = projectile;
     }
 }

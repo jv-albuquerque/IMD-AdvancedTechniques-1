@@ -48,4 +48,6 @@ public class BbsProperties : MonoBehaviour
             backspinDrag = value;
         }
     }
+
+    public float Mass { get => mass; set => mass = value; }
 }
